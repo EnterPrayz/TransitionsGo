@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Created by takam on 2015/05/17.
  */
 public class TransitionActivityAnimation extends TransitionAnimation {
-    @Override
+
     public MoveData startEnterAnimation(Context context, String transitionName, final View toView, Bundle transitionBundle, Bundle savedInstanceState, int duration, final TimeInterpolator interpolator) {
         final TransitionData transitionData = new TransitionData(context, transitionBundle, transitionName);
         trySetImageToView(toView, transitionName);
@@ -67,6 +67,7 @@ public class TransitionActivityAnimation extends TransitionAnimation {
                 translationX(leftDelta).translationY(topDelta);
         view.postDelayed(endAction, duration);
     }
+
     private static void runActivityEnterAnimation(MoveData moveData, TimeInterpolator interpolator) {
         final View toView = moveData.toView;
         toView.setPivotX(0);

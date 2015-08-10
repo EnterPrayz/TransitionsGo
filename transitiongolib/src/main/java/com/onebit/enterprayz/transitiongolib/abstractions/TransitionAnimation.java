@@ -18,7 +18,9 @@ import com.onebit.enterprayz.transitiongolib.core.MoveData;
  */
 public abstract class TransitionAnimation {
 
-    public abstract MoveData startEnterAnimation(Context context, String transitionName, final View toView, Bundle transitionBundle, Bundle savedInstanceState, final int duration, final TimeInterpolator interpolator);
+    public MoveData startEnterAnimation() {
+        throw new UnsupportedOperationException("Invalid operation. You must override method");
+    }
 
     public abstract void startExitAnimation(MoveData moveData, final Runnable endAction);
 

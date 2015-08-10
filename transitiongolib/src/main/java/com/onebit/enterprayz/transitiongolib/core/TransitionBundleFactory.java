@@ -37,6 +37,7 @@ public class TransitionBundleFactory {
 
     private static void saveImage(String transitionName, Bitmap bitmap) {
         Cash.add(transitionName, bitmap);
+
     }
 
 }
