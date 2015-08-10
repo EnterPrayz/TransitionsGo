@@ -1,9 +1,9 @@
-package com.onebit.enterprayz.transitiongolib;
+package com.onebit.enterprayz.transitiongolib.activity;
 
 import android.app.Activity;
 
 import com.onebit.enterprayz.transitiongolib.core.MoveData;
-import com.onebit.enterprayz.transitiongolib.core.TransitionActivityAnimation;
+import com.onebit.enterprayz.transitiongolib.activity.TransitionActivityAnimation;
 
 /**
  * Created by takam on 2015/03/30.

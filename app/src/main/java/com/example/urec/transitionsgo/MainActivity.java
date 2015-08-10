@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.onebit.enterprayz.transitiongolib.ActivityTransitionLauncher;
+import com.onebit.enterprayz.transitiongolib.activity.ActivityTransitionLauncher;
 import com.squareup.picasso.Picasso;
 
 
@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
                         .transit("test2", findViewById(R.id.imageView2))
                         .transit("test3", findViewById(R.id.tv_text_test1))
                         .launch(intent);
+            }
+        });
+        findViewById(R.id.imageView2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ListActivity.class));
             }
         });
     }

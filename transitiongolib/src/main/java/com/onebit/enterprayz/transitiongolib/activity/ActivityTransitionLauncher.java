@@ -1,4 +1,4 @@
-package com.onebit.enterprayz.transitiongolib;
+package com.onebit.enterprayz.transitiongolib.activity;
 
 import android.app.Activity;
 import android.content.Intent;

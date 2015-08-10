@@ -18,10 +18,16 @@
         </activity>
         <activity
             android:name=".SubActivity"
-            android:theme="@style/AppTheme"
             android:label="Second activity"
-
-            />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ListActivity"
+            android:label="List activity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SubListActivity"
+            android:label="Sub list activity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

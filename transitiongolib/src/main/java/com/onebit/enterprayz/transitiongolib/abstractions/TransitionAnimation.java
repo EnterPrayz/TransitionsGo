@@ -13,13 +13,10 @@ import android.widget.TextView;
 import com.onebit.enterprayz.transitiongolib.core.Cash;
 import com.onebit.enterprayz.transitiongolib.core.MoveData;
 
-import java.util.Hashtable;
-
 /**
  * Created by urec on 10.08.15.
  */
 public abstract class TransitionAnimation {
-
 
     public abstract MoveData startEnterAnimation(Context context, String transitionName, final View toView, Bundle transitionBundle, Bundle savedInstanceState, final int duration, final TimeInterpolator interpolator);
 

@@ -1,4 +1,4 @@
-package com.onebit.enterprayz.transitiongolib.core;
+package com.onebit.enterprayz.transitiongolib.activity;
 
 import android.animation.TimeInterpolator;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onebit.enterprayz.transitiongolib.abstractions.TransitionAnimation;
+import com.onebit.enterprayz.transitiongolib.core.MoveData;
+import com.onebit.enterprayz.transitiongolib.core.TransitionData;
 
 import java.util.Hashtable;
 
