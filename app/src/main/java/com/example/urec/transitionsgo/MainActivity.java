@@ -1,37 +1,37 @@
 package com.example.urec.transitionsgo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.onebit.enterprayz.transitiongolib.ActivityTransitionLauncher;
+import com.squareup.picasso.Picasso;
+
 
 public class MainActivity extends AppCompatActivity {
+    String refer = "https://github.com/square/picasso/raw/master/website/static/sample.png";
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
+        Picasso.with(this).load(refer).into((ImageView) findViewById(R.id.imageView));
+        Picasso.with(this).load(refer).into((ImageView) findViewById(R.id.imageView2));
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = (ImageView) v;
+                final Intent intent = new Intent(MainActivity.this, SubActivity.class);
+                ActivityTransitionLauncher.with(MainActivity.this)
+                        .transit("test1", imageView)
+                        .transit("test2", findViewById(R.id.imageView2))
+                        .transit("test3", findViewById(R.id.tv_text_test1))
+                        .launch(intent);
+            }
+        });
     }
 }
