@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.onebit.enterprayz.transitiongolib.activity.ActivityTransitionLauncher;
 import com.onebit.enterprayz.transitiongolib.view.ExitViewTransitAnimation;
-import com.onebit.enterprayz.transitiongolib.view.ViewTransition;
-import com.onebit.enterprayz.transitiongolib.view.ViewTransitionLauncher;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +20,6 @@ import java.util.Random;
  */
 public class ListActivity extends AppCompatActivity {
     public static int ACTIVITY_CLOSED_REQ = 101;
-
     String[] refers = new String[]{
             "http://mobilefon.org/_ph/28/1/179551610.jpg?1439231629",
             "http://mobilefon.org/_ph/28/1/179551610.jpg?1439231629",
@@ -61,31 +59,34 @@ public class ListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startNewActivity(view);
+                startViewsColapseAnimation(position, view);
             }
         });
     }
 
-    private void startViewsAnimation(int position, final View choicedView) {
+    private void startViewsColapseAnimation(int position, final View choicedView) {
         int firstVisibleRow = listView.getFirstVisiblePosition();
         int lastVisibleRow = listView.getLastVisiblePosition();
         int index = 1;
-        ViewTransitionLauncher launcher = ViewTransitionLauncher.make();
         for (int i = firstVisibleRow; i <= lastVisibleRow; i++) {
             if (i != position) {
-                View fromView = getViewByPosition(position, listView);
+                View fromView = getViewByPosition(i, listView);
                 View toView = position > i ? findViewById(R.id.view_above) : findViewById(R.id.view_below);
-                launcher.transit(String.valueOf(i), ViewTransition.with(fromView, toView).withDuration(100 * index).create());
+                int toY = position < i ? toView.getBottom() : -fromView.getHeight() * index;
+                Animation animation = new TranslateAnimation(0, 0, 0, toY);
+                animation.setDuration(350);
+                fromView.startAnimation(animation);
                 index++;
             }
         }
-        launcher.addEndListener(new Runnable() {
+        listView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startNewActivity(choicedView);
             }
-        });
-        exitViewTransitAnimations = launcher.launch(ListActivity.this);
+        }, 300);
+
+
     }
 
     private void startNewActivity(View view) {
