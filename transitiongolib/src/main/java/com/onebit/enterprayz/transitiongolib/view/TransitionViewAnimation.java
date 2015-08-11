@@ -18,10 +18,7 @@ public class TransitionViewAnimation extends TransitionAnimation {
 
     public MoveData startEnterAnimation(Context context, String transitionName, final View toView, final View fromView, Bundle transitionBundle, int duration, final TimeInterpolator interpolator) {
         this.fromView = fromView;
-        this.fromView.setVisibility(View.INVISIBLE);
         final TransitionData transitionData = new TransitionData(context, transitionBundle, transitionName);
-        trySetImageToView(toView, transitionName);
-        trySetTextToView(toView, transitionName);
         final MoveData moveData = new MoveData();
         moveData.toView = toView;
         moveData.duration = duration;
@@ -48,7 +45,8 @@ public class TransitionViewAnimation extends TransitionAnimation {
         toView.setTranslationX(moveData.leftDelta);
         toView.setTranslationY(moveData.topDelta);
 
-        toView.animate().setDuration(moveData.duration).
+        toView.animate()
+                .setDuration(moveData.duration).
                 scaleX(1).scaleY(1).
                 translationX(0).translationY(0).
                 setInterpolator(interpolator);
@@ -62,6 +60,7 @@ public class TransitionViewAnimation extends TransitionAnimation {
         int topDelta = moveData.topDelta;
         float widthScale = moveData.widthScale;
         float heightScale = moveData.heightScale;
+
         view.animate().setDuration(duration).
                 scaleX(widthScale).scaleY(heightScale).
                 translationX(leftDelta).translationY(topDelta);
@@ -69,8 +68,12 @@ public class TransitionViewAnimation extends TransitionAnimation {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.clearAnimation();
-                fromView.setVisibility(View.VISIBLE);
+                view.setPivotX(0);
+                view.setPivotY(0);
+                view.setScaleX(1);
+                view.setScaleY(1);
+                view.setTranslationX(0);
+                view.setTranslationY(0);
             }
         }, duration);
     }

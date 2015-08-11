@@ -32,5 +32,10 @@
             android:text="Test 1 text title"
             android:textSize="13sp"
             android:layout_gravity="left|center_vertical" />
+        <View
+            android:id="@+id/view_projection"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@android:color/darker_gray"/>
     </FrameLayout>
 </RelativeLayout>

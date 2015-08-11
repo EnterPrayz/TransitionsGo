@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.onebit.enterprayz.transitiongolib.activity.ActivityTransitionLauncher;
+import com.onebit.enterprayz.transitiongolib.view.ExitViewTransitAnimation;
+import com.onebit.enterprayz.transitiongolib.view.ViewTransition;
+import com.onebit.enterprayz.transitiongolib.view.ViewTransitionLauncher;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,7 +20,7 @@ import java.util.Random;
  * Created by urec on 10.08.15.
  */
 public class ListActivity extends AppCompatActivity {
-
+    public static int ACTIVITY_CLOSED_REQ = 101;
 
     String[] refers = new String[]{
             "http://mobilefon.org/_ph/28/1/179551610.jpg?1439231629",
@@ -31,28 +35,80 @@ public class ListActivity extends AppCompatActivity {
             "http://mobilefon.org/_ph/28/1/730640591.jpg?1439231629",
             "http://mobilefon.org/_ph/28/1/169441899.jpg?1439231629",
             "http://mobilefon.org/_ph/28/1/462575782.jpg?1439231629"};
+    private ListAdapter adapter;
+    private ListView listView;
+    private ArrayList<ExitViewTransitAnimation> exitViewTransitAnimations;
 
+    @Override
+    public void onBackPressed() {
+        if (exitViewTransitAnimations != null) {
+            for (ExitViewTransitAnimation exitView : exitViewTransitAnimations) {
+                exitView.exit();
+            }
+            exitViewTransitAnimations = null;
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-        final ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(new ListAdapter(getTestList()));
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new ListAdapter(getTestList());
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Intent intent = new Intent(ListActivity.this, SubListActivity.class);
-                ActivityTransitionLauncher.with(ListActivity.this)
-                        .transit("large_image", view.findViewById(R.id.iv_large_image))
-                        .transit("small_image", view.findViewById(R.id.iv_small_image))
-                        .transit("title", view.findViewById(R.id.tv_title))
-                        .transit("sub_title", view.findViewById(R.id.tv_sub_title))
-                        .launch(intent);
+                startNewActivity(view);
             }
         });
     }
 
+    private void startViewsAnimation(int position, final View choicedView) {
+        int firstVisibleRow = listView.getFirstVisiblePosition();
+        int lastVisibleRow = listView.getLastVisiblePosition();
+        int index = 1;
+        ViewTransitionLauncher launcher = ViewTransitionLauncher.make();
+        for (int i = firstVisibleRow; i <= lastVisibleRow; i++) {
+            if (i != position) {
+                View fromView = getViewByPosition(position, listView);
+                View toView = position > i ? findViewById(R.id.view_above) : findViewById(R.id.view_below);
+                launcher.transit(String.valueOf(i), ViewTransition.with(fromView, toView).withDuration(100 * index).create());
+                index++;
+            }
+        }
+        launcher.addEndListener(new Runnable() {
+            @Override
+            public void run() {
+                startNewActivity(choicedView);
+            }
+        });
+        exitViewTransitAnimations = launcher.launch(ListActivity.this);
+    }
+
+    private void startNewActivity(View view) {
+        final Intent intent = new Intent(ListActivity.this, SubListActivity.class);
+        ActivityTransitionLauncher.with(ListActivity.this)
+                .transit("large_image", view.findViewById(R.id.iv_large_image))
+                .transit("small_image", view.findViewById(R.id.iv_small_image))
+                .transit("title", view.findViewById(R.id.tv_title))
+                .transit("sub_title", view.findViewById(R.id.tv_sub_title))
+                .launch(intent, ACTIVITY_CLOSED_REQ);
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
 
     private ArrayList<ListItem> getTestList() {
         ArrayList<ListItem> test = new ArrayList<>();
@@ -74,4 +130,11 @@ public class ListActivity extends AppCompatActivity {
         return refers[rand.nextInt(refers.length)];
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_CLOSED_REQ) {
+
+        }
+    }
 }

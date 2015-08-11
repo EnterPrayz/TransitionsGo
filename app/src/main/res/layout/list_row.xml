@@ -33,15 +33,15 @@
         android:textSize="24sp" />
 
     <TextView
-        android:layout_marginTop="10dp"
         android:id="@+id/tv_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="This is test"
-        android:textSize="16sp"
-        android:layout_below="@+id/tv_title"
-        android:layout_centerHorizontal="true" />
+        android:textSize="16sp" />
 
 </RelativeLayout>

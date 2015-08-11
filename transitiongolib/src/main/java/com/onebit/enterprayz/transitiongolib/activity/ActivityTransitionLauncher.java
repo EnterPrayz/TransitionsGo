@@ -37,7 +37,19 @@ public class ActivityTransitionLauncher {
         return this;
     }
 
+    public void launch(Intent intent, int requestCode) {
+        prepareIntent(intent);
+        activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(0, 0);
+    }
+
     public void launch(Intent intent) {
+        prepareIntent(intent);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
+    }
+
+    private void prepareIntent(Intent intent) {
         Bundle transitionBundle = new Bundle();
         for (String transitName : viewHashtable.keySet()) {
             View fromView = viewHashtable.get(transitName);
@@ -48,7 +60,5 @@ public class ActivityTransitionLauncher {
             TransitionBundleFactory.createTransitionBundle(activity, transitionBundle, transitName, fromView, bitmap);
         }
         intent.putExtras(transitionBundle);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(0, 0);
     }
 }

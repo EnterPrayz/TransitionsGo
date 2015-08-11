@@ -1,6 +1,7 @@
 package com.onebit.enterprayz.transitiongolib.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,7 +23,9 @@ import java.util.Hashtable;
 public class ViewTransitionLauncher {
 
     private static Hashtable<String, ViewTransition> viewHashtable;
+    private static Runnable endOfAction;
 
+    private int maxDuration = 0;
 
     public static ViewTransitionLauncher make() {
         viewHashtable = new Hashtable<>();
@@ -34,7 +37,12 @@ public class ViewTransitionLauncher {
         return this;
     }
 
-    public ArrayList<ExitActivityTransition> launch() {
+    public ViewTransitionLauncher addEndListener(Runnable endOfAction) {
+        ViewTransitionLauncher.endOfAction = endOfAction;
+        return this;
+    }
+
+    public ArrayList<ExitViewTransitAnimation> launch(Context context) {
         Bundle transitionBundle = new Bundle();
         for (String transitName : viewHashtable.keySet()) {
             ViewTransition transition = viewHashtable.get(transitName);
@@ -42,13 +50,17 @@ public class ViewTransitionLauncher {
             if (transition.from instanceof ImageView) {
                 bitmap = ((BitmapDrawable) ((ImageView) transition.from).getDrawable()).getBitmap();
             }
-            TransitionBundleFactory.createTransitionBundle(transition.from.getContext(), transitionBundle, transitName, transition.from, bitmap);
+            TransitionBundleFactory.createTransitionBundle(context, transitionBundle, String.valueOf(transition.from.getId()), transition.from, bitmap);
         }
-        ArrayList<ExitActivityTransition> res = new ArrayList<>();
+        ArrayList<ExitViewTransitAnimation> res = new ArrayList<>();
         for (String transitName : viewHashtable.keySet()) {
             ViewTransition transition = viewHashtable.get(transitName);
-            final MoveData moveData = new TransitionViewAnimation().startEnterAnimation(transition.to.getContext(), transitName, transition.to, transition.from, transitionBundle, transition.getDuration(), transition.getInterpolator());
-            res.add(new ExitActivityTransition(moveData));
+            maxDuration = Math.max(maxDuration, transition.getDuration());
+            final MoveData moveData = new TransitionViewAnimation().startEnterAnimation(context, String.valueOf(transition.from.getId()), transition.to, transition.from, transitionBundle, transition.getDuration(), transition.getInterpolator());
+            res.add(new ExitViewTransitAnimation(moveData));
+        }
+        if (endOfAction != null) {
+            viewHashtable.elements().nextElement().from.postDelayed(endOfAction, maxDuration);
         }
         return res;
     }
