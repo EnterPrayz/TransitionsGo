@@ -24,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView) v;
                 final Intent intent = new Intent(MainActivity.this, SubActivity.class);
                 ActivityTransitionLauncher.with(MainActivity.this)
-                        .transit("test1", imageView)
+                        .transit("test1", v)
                         .transit("test2", findViewById(R.id.imageView2))
                         .transit("test3", findViewById(R.id.tv_text_test1))
                         .launch(intent);
