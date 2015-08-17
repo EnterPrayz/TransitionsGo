@@ -2,6 +2,8 @@
 If you need transits muttiple views beetven activities on pre lolipop devices you can use TransitionGo.
 ![list](docs/list.gif)![activity](docs/activity.gif)
 
+App [sample](docs/sample.apk)
+
 # Get start
 Download [TransitionGo master](https://github.com/EnterPrayz/TransitionsGo/archive/master.zip) and add transitiongolib to your progect as module.
 Add in first activity 
