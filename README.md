@@ -48,6 +48,10 @@ If you want the exit animation, you can do like this in second activity.
         }
     }
  ```
- 
+# Thanks
+[takahirom](https://github.com/takahirom) for sample app.
 
+## License
+This project is released under the Apache License, Version 2.0.
 
+* [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
