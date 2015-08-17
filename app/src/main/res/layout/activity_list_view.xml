@@ -7,7 +7,7 @@
     <View
         android:id="@+id/view_above"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="0dp"
         android:background="@color/material_blue_grey_800"/>
 
     <ListView
@@ -21,7 +21,7 @@
     <View
         android:id="@+id/view_below"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="0dp"
         android:layout_below="@+id/list"
         android:background="@color/material_blue_grey_800"/>
 

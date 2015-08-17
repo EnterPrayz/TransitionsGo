@@ -26,7 +26,6 @@ public abstract class TransitionAnimation {
 
     public void trySetTextToView(View toView, String transitionName) {
         if (Cash.getTextCash().containsKey(transitionName)) {
-            // Cant get bitmap by static field
             String text = Cash.getTextCash().get(transitionName);
             if (toView instanceof TextView) {
                 ((TextView) toView).setText(text);
@@ -36,7 +35,6 @@ public abstract class TransitionAnimation {
 
     public void trySetImageToView(View toView, String transitionName) {
         if (Cash.getImageCash().containsKey(transitionName)) {
-            // Cant get bitmap by static field
             Bitmap bitmap = Cash.getImageCash().get(transitionName);
             if (toView instanceof ImageView) {
                 final ImageView toImageView = (ImageView) toView;

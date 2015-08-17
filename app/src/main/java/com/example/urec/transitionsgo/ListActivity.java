@@ -74,7 +74,7 @@ public class ListActivity extends AppCompatActivity {
                 View toView = position > i ? findViewById(R.id.view_above) : findViewById(R.id.view_below);
                 int toY = position < i ? toView.getBottom() : -fromView.getHeight() * index;
                 Animation animation = new TranslateAnimation(0, 0, 0, toY);
-                animation.setDuration(350);
+                animation.setDuration(140);
                 fromView.startAnimation(animation);
                 index++;
             }
@@ -84,7 +84,7 @@ public class ListActivity extends AppCompatActivity {
             public void run() {
                 startNewActivity(choicedView);
             }
-        }, 300);
+        }, 100);
 
 
     }
