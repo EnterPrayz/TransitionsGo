@@ -17,7 +17,7 @@ import com.onebit.enterprayz.transitiongolib.core.MoveData;
  * Created by urec on 10.08.15.
  */
 public abstract class TransitionAnimation {
-
+//
     public MoveData startEnterAnimation() {
         throw new UnsupportedOperationException("Invalid operation. You must override method");
     }
