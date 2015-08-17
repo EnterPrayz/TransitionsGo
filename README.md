@@ -1,5 +1,9 @@
 # TransitionsGo
-Open source libs for activity transition on pre lolipop devices.
+Open source libs for views transitions beetven activities on pre lolipop devices.
 ![list](docs/list.gif)
 ![activity](docs/activity.gif)
+
+# Get start
+
+
 
