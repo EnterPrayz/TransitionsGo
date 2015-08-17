@@ -28,8 +28,26 @@ Receive intent in second activity.
                 .transit("test1", findViewById(R.id.image))
                 .transit("test2", findViewById(R.id.image2))
                 .transit("test3", findViewById(R.id.tv_test_1))
-                .interpolator(new DecelerateInterpolator())
-                .duration(500)
                 .start(savedInstanceState);
     }
 ```
+You can add interpolator or/and animation duration.
+```java
+ActivityTransition.with(getIntent())
+                ...
+                .interpolator(new DecelerateInterpolator())
+                .duration(500)
+                .start(savedInstanceState);
+```
+If you want the exit animation, you can do like this in second activity.
+```java
+  @Override
+    public void onBackPressed() {
+        for (ExitActivityTransition exitActivityTransition : exitTransition) {
+            exitActivityTransition.exit(this);
+        }
+    }
+ ```
+ 
+
+
